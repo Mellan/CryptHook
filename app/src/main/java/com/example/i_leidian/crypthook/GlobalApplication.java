@@ -17,9 +17,6 @@ public class GlobalApplication extends Application {
 
     public static GlobalApplication getInstance() {
 
-        if (instance == null)
-            instance = new GlobalApplication();
-
         return instance;
     }
 }

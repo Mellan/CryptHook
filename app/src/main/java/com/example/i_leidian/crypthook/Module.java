@@ -34,18 +34,19 @@ import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
  */
 
 public class Module implements IXposedHookLoadPackage{
-    private String packagename;
+    public String packagename2;
     private static final int BYTE_MSK = 0xFF;
     private static final int HEX_DIGIT_MASK = 0xF;
     private static final int HEX_DIGIT_BITS = 4;
     private static final String HEX_DIGITS = "0123456789abcdef";
+
+
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
-        SharedPreferences shared=GlobalApplication.getInstance().getSharedPreferences("shared_pref",MODE_PRIVATE);
-        packagename=shared.getString("packagename","");
-        Log.d("packagename",packagename);
-        if (loadPackageParam.packageName.equals("com.example.i_leidian.encrypt"))
-        {
+
+
+        //if (loadPackageParam.packageName.equals("com.example.i_leidian.ludashi"))
+        //{
             XposedHelpers.findAndHookConstructor(SecretKeySpec.class, byte[].class, String.class, new XC_MethodHook() {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     StringBuffer sb = new StringBuffer();
@@ -126,7 +127,7 @@ public class Module implements IXposedHookLoadPackage{
                 }
             });
         }
-    }
+    //}
     public static String toHexString(final byte[] byteArray) {
         StringBuilder sb = new StringBuilder(byteArray.length * 2);
         for (int i = 0; i < byteArray.length; i++) {
