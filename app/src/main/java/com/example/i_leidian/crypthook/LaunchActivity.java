@@ -30,11 +30,6 @@ public class LaunchActivity extends AppCompatActivity {
                 editor.putString("packagename",packagename);
                 editor.commit();
                 doStartApplicationWithPackageName(packagename);
-                //SharedPreferences sharedPreferences=getSharedPreferences("shared_pref",MODE_PRIVATE);
-                //Log.d("Test",sharedPreferences.getString("packagename",""));
-                //SharedPreferences shared=GlobalApplication.getInstance().getSharedPreferences("shared_pref",MODE_PRIVATE);
-                //String packagename1=shared.getString("packagename","");
-                //Log.d("Test1",packagename1);
 
             }
         });

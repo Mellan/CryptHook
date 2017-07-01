@@ -21,6 +21,7 @@ import javax.crypto.spec.SecretKeySpec;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
@@ -34,7 +35,7 @@ import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
  */
 
 public class Module implements IXposedHookLoadPackage{
-    public String packagename2;
+    public String packagename;
     private static final int BYTE_MSK = 0xFF;
     private static final int HEX_DIGIT_MASK = 0xF;
     private static final int HEX_DIGIT_BITS = 4;
@@ -43,10 +44,10 @@ public class Module implements IXposedHookLoadPackage{
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
-
-
-        //if (loadPackageParam.packageName.equals("com.example.i_leidian.ludashi"))
-        //{
+        XSharedPreferences xSharedPreferences=new XSharedPreferences("com.example.i_leidian.crypthook","shared_pref");
+        packagename= xSharedPreferences.getString("packagename","");
+        if (loadPackageParam.packageName.equals(packagename))
+        {
             XposedHelpers.findAndHookConstructor(SecretKeySpec.class, byte[].class, String.class, new XC_MethodHook() {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     StringBuffer sb = new StringBuffer();
@@ -127,7 +128,7 @@ public class Module implements IXposedHookLoadPackage{
                 }
             });
         }
-    //}
+    }
     public static String toHexString(final byte[] byteArray) {
         StringBuilder sb = new StringBuilder(byteArray.length * 2);
         for (int i = 0; i < byteArray.length; i++) {
